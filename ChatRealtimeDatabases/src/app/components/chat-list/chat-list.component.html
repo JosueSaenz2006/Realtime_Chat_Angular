@@ -1,0 +1,48 @@
+<div class="chat-list-container">
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando chats...</p>
+    </div>
+  } @else if (chats().length === 0) {
+    <div class="empty-state">
+      <span class="empty-icon">💬</span>
+      <h3>No tienes chats aún</h3>
+      <p>Inicia una conversación desde la página de inicio</p>
+    </div>
+  } @else {
+    <div class="chats-wrapper">
+      @for (chat of chats(); track chat.id) {
+        <div class="chat-item" (click)="selectChat(chat.id)">
+          <div class="chat-avatar">
+            @if (currentUser | async; as user) {
+              @if (getChatPhoto(chat, user.uid)) {
+                <img [src]="getChatPhoto(chat, user.uid)" [alt]="getChatName(chat, user.uid)" />
+              } @else {
+                <div class="avatar-placeholder">
+                  {{ getChatName(chat, user.uid).charAt(0).toUpperCase() }}
+                </div>
+              }
+            }
+          </div>
+
+          <div class="chat-content">
+            @if (currentUser | async; as user) {
+              <div class="chat-header">
+                <h3 class="chat-name">{{ getChatName(chat, user.uid) }}</h3>
+                <span class="chat-time">{{ formatTime(chat.lastMessageAt || chat.createdAt) }}</span>
+              </div>
+
+              <div class="chat-preview">
+                <p class="last-message">{{ getLastMessagePreview(chat) }}</p>
+                @if (getUnreadCount(chat, user.uid) > 0) {
+                  <span class="unread-badge">{{ getUnreadCount(chat, user.uid) }}</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

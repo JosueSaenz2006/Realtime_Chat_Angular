@@ -1,0 +1,78 @@
+.chat-page-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  height: 100vh;
+  background: #f0f2f5;
+}
+
+.chat-sidebar {
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.chat-main {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.empty-chat-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  padding: 40px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80px;
+  opacity: 0.3;
+  margin-bottom: 20px;
+}
+
+.empty-chat-state h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empty-chat-state p {
+  font-size: 14px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .chat-page-container {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-sidebar {
+    display: none;
+  }
+
+  /* Mostrar solo el sidebar en móvil cuando no hay chat seleccionado */
+  .chat-page-container:has(.empty-chat-state) .chat-sidebar {
+    display: flex;
+  }
+
+  .chat-page-container:has(.empty-chat-state) .chat-main {
+    display: none;
+  }
+}

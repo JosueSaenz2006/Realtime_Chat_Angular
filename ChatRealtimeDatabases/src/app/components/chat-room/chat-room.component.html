@@ -1,0 +1,92 @@
+<div class="chat-room-container">
+  <div class="chat-header">
+    <button class="back-button" (click)="goBack()">
+      ←
+    </button>
+    <div class="header-info">
+      <h2>Chat</h2>
+    </div>
+  </div>
+
+  <div class="messages-container">
+    @if (loading()) {
+      <div class="loading-container">
+        <div class="spinner"></div>
+        <p>Cargando mensajes...</p>
+      </div>
+    } @else if (messages().length === 0) {
+      <div class="empty-messages">
+        <span class="empty-icon">💬</span>
+        <p>No hay mensajes aún</p>
+        <p class="empty-subtitle">Envía el primer mensaje para comenzar la conversación</p>
+      </div>
+    } @else {
+      @for (message of messages(); track message.id; let i = $index) {
+        @if (shouldShowDateSeparator(i)) {
+          <div class="date-separator">
+            <span>{{ formatDate(message.timestamp) }}</span>
+          </div>
+        }
+
+        <div class="message-wrapper" [class.own]="isOwnMessage(message)">
+          <div class="message-bubble">
+            @if (!isOwnMessage(message)) {
+              <div class="message-sender">{{ message.senderName }}</div>
+            }
+
+            @if (message.type === 'text') {
+              <div class="message-text">{{ message.content }}</div>
+            }
+
+            @if (message.type === 'image' && message.mediaURL) {
+              <div class="message-image">
+                <img [src]="message.mediaURL" [alt]="message.content" />
+              </div>
+            }
+
+            @if (message.type === 'audio' && message.mediaURL) {
+              <div class="message-audio">
+                <span class="media-icon">🎵</span>
+                <audio controls [src]="message.mediaURL"></audio>
+              </div>
+            }
+
+            @if (message.type === 'video' && message.mediaURL) {
+              <div class="message-video">
+                <video controls [src]="message.mediaURL"></video>
+              </div>
+            }
+
+            @if (message.type === 'file' && message.mediaURL) {
+              <a [href]="message.mediaURL" target="_blank" class="message-file">
+                <span class="file-icon">📎</span>
+                <div class="file-info">
+                  <div class="file-name">{{ message.mediaName }}</div>
+                  <div class="file-size">{{ formatFileSize(message.mediaSize) }}</div>
+                </div>
+              </a>
+            }
+
+            <div class="message-footer">
+              <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+              @if (isOwnMessage(message)) {
+                <span class="message-status">
+                  @if (message.isRead) {
+                    ✓✓
+                  } @else {
+                    ✓
+                  }
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <app-message-input
+    (sendMessage)="sendTextMessage($event)"
+    (sendFile)="sendMediaMessage($event)"
+  ></app-message-input>
+</div>

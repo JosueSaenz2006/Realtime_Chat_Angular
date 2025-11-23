@@ -1,0 +1,71 @@
+<div class="home-container">
+  <div class="home-header">
+    <h1>💬 Chat en Tiempo Real</h1>
+    @if (currentUser | async; as user) {
+      <div class="user-info">
+        <div class="user-avatar">
+          @if (user.photoURL) {
+            <img [src]="user.photoURL" [alt]="user.displayName" />
+          } @else {
+            <div class="avatar-placeholder">
+              {{ user.displayName.charAt(0).toUpperCase() }}
+            </div>
+          }
+        </div>
+        <div class="user-details">
+          <h2>Hola, {{ user.displayName }}!</h2>
+          <p class="user-role">Rol: {{ user.role }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="home-content">
+    <div class="welcome-section">
+      <h3>Bienvenido a tu chat</h3>
+      <p>Conecta con tus contactos en tiempo real</p>
+    </div>
+
+    <div class="action-cards">
+      <div class="action-card" (click)="navigateToChat()">
+        <div class="card-icon">💬</div>
+        <h4>Mis Chats</h4>
+        <p>Ver todas tus conversaciones</p>
+      </div>
+
+      <div class="action-card" (click)="navigateToProfile()">
+        <div class="card-icon">👤</div>
+        <h4>Mi Perfil</h4>
+        <p>Edita tu información personal</p>
+      </div>
+
+      <div class="action-card" (click)="logout()">
+        <div class="card-icon">🚪</div>
+        <h4>Cerrar Sesión</h4>
+        <p>Salir de tu cuenta</p>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <h3>Características</h3>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">📷</span>
+          <p>Envía imágenes</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎵</span>
+          <p>Comparte audios</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎥</span>
+          <p>Envía videos</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📎</span>
+          <p>Archivos adjuntos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="chat-page-container">
+  <div class="chat-sidebar">
+    <div class="sidebar-header">
+      <h2>💬 Mis Chats</h2>
+    </div>
+    <app-chat-list></app-chat-list>
+  </div>
+
+  <div class="chat-main">
+    <router-outlet></router-outlet>
+    
+    @defer {
+      <div class="empty-chat-state">
+        <span class="empty-icon">💬</span>
+        <h3>Selecciona un chat</h3>
+        <p>Elige una conversación para comenzar a chatear</p>
+      </div>
+    }
+  </div>
+</div>

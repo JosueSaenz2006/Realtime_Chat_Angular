@@ -1,0 +1,113 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <button class="back-button" (click)="goBack()">
+      ← Volver
+    </button>
+    <h1>Mi Perfil</h1>
+  </div>
+
+  @if (currentUser(); as user) {
+    <div class="profile-content">
+      <div class="profile-card">
+        <div class="profile-avatar-section">
+          @if (user.photoURL) {
+            <img [src]="user.photoURL" [alt]="user.displayName" class="profile-avatar" />
+          } @else {
+            <div class="avatar-placeholder-large">
+              {{ user.displayName.charAt(0).toUpperCase() }}
+            </div>
+          }
+          <span class="role-badge" [ngClass]="getRoleBadgeClass(user.role)">
+            {{ user.role }}
+          </span>
+        </div>
+
+        @if (message()) {
+          <div class="message" [ngClass]="messageType()">
+            {{ message() }}
+          </div>
+        }
+
+        <div class="profile-info">
+          <div class="info-group">
+            <label>Nombre completo</label>
+            @if (editMode()) {
+              <input
+                type="text"
+                [(ngModel)]="displayName"
+                class="profile-input"
+                [disabled]="loading()"
+              />
+            } @else {
+              <p class="info-value">{{ user.displayName }}</p>
+            }
+          </div>
+
+          <div class="info-group">
+            <label>Correo electrónico</label>
+            <p class="info-value">{{ user.email }}</p>
+          </div>
+
+          <div class="info-group">
+            <label>Rol</label>
+            <p class="info-value role-text">{{ user.role }}</p>
+          </div>
+
+          <div class="info-group">
+            <label>Estado</label>
+            <p class="info-value">
+              <span class="status-indicator" [class.active]="user.isActive"></span>
+              {{ user.isActive ? 'Activo' : 'Inactivo' }}
+            </p>
+          </div>
+
+          <div class="info-group">
+            <label>Miembro desde</label>
+            <p class="info-value">{{ user.createdAt | date:'medium' }}</p>
+          </div>
+
+          @if (user.lastSeen) {
+            <div class="info-group">
+              <label>Último acceso</label>
+              <p class="info-value">{{ user.lastSeen | date:'medium' }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="profile-actions">
+          @if (!editMode()) {
+            <button class="btn-primary" (click)="toggleEditMode()">
+              ✏️ Editar Perfil
+            </button>
+          } @else {
+            <div class="edit-actions">
+              <button
+                class="btn-primary"
+                (click)="saveProfile()"
+                [disabled]="loading()"
+              >
+                @if (loading()) {
+                  <span class="spinner"></span>
+                  Guardando...
+                } @else {
+                  ✓ Guardar
+                }
+              </button>
+              <button
+                class="btn-secondary"
+                (click)="toggleEditMode()"
+                [disabled]="loading()"
+              >
+                ✕ Cancelar
+              </button>
+            </div>
+          }
+
+          <button class="btn-logout" (click)="logout()">
+            🚪 Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

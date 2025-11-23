@@ -1,0 +1,66 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>💬 Chat en Tiempo Real</h1>
+      <p>Inicia sesión para comenzar a chatear</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" class="login-form">
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="tu@email.com"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="••••••••"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        @if (loading()) {
+          <span class="spinner"></span>
+          Iniciando sesión...
+        } @else {
+          Iniciar Sesión
+        }
+      </button>
+
+      <div class="divider">
+        <span></span>
+        <p>o continúa con</p>
+        <span></span>
+      </div>
+
+      <button type="button" class="btn-google" (click)="onLoginWithGoogle()" [disabled]="loading()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Google
+      </button>
+
+      <div class="register-link">
+        ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+      </div>
+    </form>
+  </div>
+</div>

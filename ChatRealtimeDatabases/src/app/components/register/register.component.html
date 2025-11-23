@@ -1,0 +1,106 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>📝 Crear Cuenta</h1>
+      <p>Regístrate para comenzar a chatear</p>
+    </div>
+
+    <form (ngSubmit)="onRegister()" class="register-form">
+      <div class="form-group">
+        <label for="displayName">Nombre completo</label>
+        <input
+          type="text"
+          id="displayName"
+          [(ngModel)]="displayName"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Juan Pérez"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="tu@email.com"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select
+          id="role"
+          [(ngModel)]="role"
+          [ngModelOptions]="{standalone: true}"
+          [disabled]="loading()"
+        >
+          @for (roleOption of userRoles; track roleOption.value) {
+            <option [value]="roleOption.value">{{ roleOption.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Mínimo 6 caracteres"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Repite tu contraseña"
+          required
+          [disabled]="loading()"
+        />
+      </div>
+
+      @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        @if (loading()) {
+          <span class="spinner"></span>
+          Registrando...
+        } @else {
+          Crear Cuenta
+        }
+      </button>
+
+      <div class="divider">
+        <span></span>
+        <p>o regístrate con</p>
+        <span></span>
+      </div>
+
+      <button type="button" class="btn-google" (click)="onRegisterWithGoogle()" [disabled]="loading()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Continuar con Google
+      </button>
+
+      <div class="login-link">
+        ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a>
+      </div>
+    </form>
+  </div>
+</div>

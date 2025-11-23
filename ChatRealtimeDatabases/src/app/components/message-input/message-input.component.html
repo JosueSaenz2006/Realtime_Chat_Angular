@@ -1,0 +1,46 @@
+<div class="message-input-container">
+  @if (showEmojiPicker()) {
+    <div class="emoji-picker">
+      @for (emoji of emojis; track emoji) {
+        <button type="button" class="emoji-button" (click)="addEmoji(emoji)">
+          {{ emoji }}
+        </button>
+      }
+    </div>
+  }
+
+  <div class="input-wrapper">
+    <button type="button" class="emoji-toggle-button" (click)="toggleEmojiPicker()">
+      😊
+    </button>
+
+    <textarea
+      [(ngModel)]="messageText"
+      (keypress)="onKeyPress($event)"
+      placeholder="Escribe un mensaje..."
+      rows="1"
+      class="message-textarea"
+    ></textarea>
+
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileSelected($event)"
+      accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.txt"
+      style="display: none"
+    />
+
+    <button type="button" class="attach-button" (click)="fileInput.click()">
+      📎
+    </button>
+
+    <button
+      type="button"
+      class="send-button"
+      (click)="onSubmit()"
+      [disabled]="!messageText().trim()"
+    >
+      ➤
+    </button>
+  </div>
+</div>

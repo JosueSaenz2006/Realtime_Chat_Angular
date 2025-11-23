@@ -1,0 +1,151 @@
+.message-input-container {
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  position: relative;
+}
+
+.emoji-picker {
+  position: absolute;
+  bottom: 100%;
+  left: 12px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 280px;
+  z-index: 100;
+}
+
+.emoji-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.emoji-button:hover {
+  background-color: #f5f5f5;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 12px;
+}
+
+.emoji-toggle-button,
+.attach-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.emoji-toggle-button:hover,
+.attach-button:hover {
+  background-color: #f5f5f5;
+}
+
+.message-textarea {
+  flex: 1;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  max-height: 120px;
+  overflow-y: auto;
+  transition: border-color 0.2s ease;
+}
+
+.message-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.message-textarea::placeholder {
+  color: #999;
+}
+
+.send-button {
+  background: #667eea;
+  border: none;
+  color: white;
+  font-size: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.send-button:hover:not(:disabled) {
+  background: #5568d3;
+  transform: scale(1.05);
+}
+
+.send-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.send-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Scrollbar para textarea */
+.message-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.message-textarea::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.message-textarea::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+@media (max-width: 768px) {
+  .emoji-picker {
+    max-width: calc(100vw - 40px);
+  }
+
+  .input-wrapper {
+    padding: 8px;
+  }
+
+  .emoji-toggle-button,
+  .attach-button {
+    font-size: 20px;
+    padding: 6px;
+  }
+
+  .send-button {
+    width: 40px;
+    height: 40px;
+  }
+}
